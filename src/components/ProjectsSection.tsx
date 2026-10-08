@@ -31,9 +31,18 @@ const projects: Project[] = [
       'HTML Reports',
     ],
     metrics: [
-      { label: 'RECOVERY', value: 'Deleted Files + Carving' },
-      { label: 'HASHING', value: 'SHA-256' },
-      { label: 'REPORTING', value: 'CSV + HTML' },
+      {
+        label: 'RECOVERY',
+        value: 'Deleted Files + Carving',
+      },
+      {
+        label: 'HASHING',
+        value: 'SHA-256',
+      },
+      {
+        label: 'REPORTING',
+        value: 'CSV + HTML',
+      },
     ],
   },
 
@@ -55,9 +64,18 @@ const projects: Project[] = [
       'Gemini API',
     ],
     metrics: [
-      { label: 'AI ENGINE', value: 'Gemini' },
-      { label: 'DOCUMENTS', value: 'PDF / DOCX / TXT' },
-      { label: 'ARCHITECTURE', value: 'Frontend + API' },
+      {
+        label: 'AI ENGINE',
+        value: 'Gemini',
+      },
+      {
+        label: 'DOCUMENTS',
+        value: 'PDF / DOCX / TXT',
+      },
+      {
+        label: 'ARCHITECTURE',
+        value: 'Frontend + API',
+      },
     ],
   },
 
@@ -79,9 +97,18 @@ const projects: Project[] = [
       'Vercel',
     ],
     metrics: [
-      { label: 'DOMAIN', value: 'Civic Technology' },
-      { label: 'AI ROLE', value: 'Issue Prioritization' },
-      { label: 'DEPLOYMENT', value: 'Vercel' },
+      {
+        label: 'DOMAIN',
+        value: 'Civic Technology',
+      },
+      {
+        label: 'AI ROLE',
+        value: 'Issue Prioritization',
+      },
+      {
+        label: 'DEPLOYMENT',
+        value: 'Vercel',
+      },
     ],
   },
 
@@ -102,9 +129,18 @@ const projects: Project[] = [
       'Statistical Analysis',
     ],
     metrics: [
-      { label: 'DOMAIN', value: 'Agriculture' },
-      { label: 'FOCUS', value: 'Yield + Resources' },
-      { label: 'OUTPUT', value: 'Analytical Insights' },
+      {
+        label: 'DOMAIN',
+        value: 'Agriculture',
+      },
+      {
+        label: 'FOCUS',
+        value: 'Yield + Resources',
+      },
+      {
+        label: 'OUTPUT',
+        value: 'Analytical Insights',
+      },
     ],
   },
 ];
@@ -115,20 +151,14 @@ export const ProjectsSection: React.FC = () => {
       id="work"
       className="relative w-full bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black pt-20 pb-32 px-6 sm:px-12 lg:px-20"
     >
-      {/* =========================================================
-          STUDIO AMBIENT GLOWS
-      ========================================================= */}
-
+      {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/3 w-[36rem] h-[36rem] bg-[#D4AF37]/5 rounded-full blur-[180px] pointer-events-none" />
 
       <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-[#8C6D4F]/5 rounded-full blur-[170px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
 
-        {/* =========================================================
-            EYEBROW HEADER
-        ========================================================= */}
-
+        {/* Section eyebrow */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -138,7 +168,9 @@ export const ProjectsSection: React.FC = () => {
         >
           <span
             className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#D4AF37]"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+            }}
           >
             02 / FEATURED WORK
           </span>
@@ -146,10 +178,7 @@ export const ProjectsSection: React.FC = () => {
           <div className="w-20 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
         </motion.div>
 
-        {/* =========================================================
-            SECTION HEADLINE
-        ========================================================= */}
-
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +191,9 @@ export const ProjectsSection: React.FC = () => {
         >
           <h2
             className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight uppercase leading-[0.85] select-none"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+            }}
           >
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
               SELECTED WORKS.
@@ -175,34 +206,25 @@ export const ProjectsSection: React.FC = () => {
 
           <p
             className="text-xs sm:text-sm font-light text-[#A8988B] max-w-sm mt-4 md:mt-0 leading-relaxed"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+            }}
           >
             A selection of AI, full-stack, data analytics, and
             technology projects built to solve practical problems.
           </p>
         </motion.div>
 
-        {/* =========================================================
-            CINEMATIC STACKING PROJECT DECK
-        ========================================================= */}
-
-        <ScrollStack
-          itemDistance={20}
-          itemScale={0.035}
-          itemStackDistance={28}
-          stackPosition="15%"
-          scaleEndPosition="6%"
-          baseScale={0.88}
-          useWindowScroll={true}
-        >
+        {/* Project stack */}
+        <ScrollStack>
           {projects.map((project) => (
             <ScrollStackItem key={project.title}>
               <div className="relative w-full rounded-2xl border border-[#8C6D4F]/50 bg-[#0E0C0A] p-8 sm:p-12 shadow-[0_25px_70px_rgba(0,0,0,0.98)] group overflow-hidden transition-colors duration-500 hover:border-[#D4AF37]">
 
-                {/* Top Gold Border Light Flare */}
+                {/* Top gold border */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/80 to-transparent" />
 
-                {/* Corner L-Brackets */}
+                {/* Corner brackets */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#D4AF37]/60 group-hover:border-[#D4AF37] transition-colors" />
 
                 <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#D4AF37]/60 group-hover:border-[#D4AF37] transition-colors" />
@@ -211,28 +233,24 @@ export const ProjectsSection: React.FC = () => {
 
                 <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]/60 group-hover:border-[#D4AF37] transition-colors" />
 
-                {/* Big Background Watermark Number */}
+                {/* Background number */}
                 <span
                   className="absolute -bottom-6 -right-3 text-8xl sm:text-9xl font-bold text-[#EAD8C7]/5 select-none pointer-events-none leading-none"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                  }}
                 >
                   {project.number}
                 </span>
 
-                {/* =================================================
-                    CONTENT GRID
-                ================================================= */}
-
+                {/* Content */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
 
-                  {/* =================================================
-                      LEFT COLUMN
-                  ================================================= */}
-
+                  {/* Left */}
                   <div className="lg:col-span-7 flex flex-col justify-between">
                     <div>
 
-                      {/* Project Number + Category */}
+                      {/* Number and category */}
                       <div className="flex items-center space-x-3 mb-4">
                         <span className="text-xs font-mono font-bold text-[#D4AF37]">
                           {project.number} //
@@ -243,10 +261,12 @@ export const ProjectsSection: React.FC = () => {
                         </span>
                       </div>
 
-                      {/* Project Title */}
+                      {/* Title */}
                       <h3
                         className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white mb-4 group-hover:text-[#F7E7C4] transition-colors uppercase leading-[0.9]"
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                        style={{
+                          fontFamily: "'Bebas Neue', sans-serif",
+                        }}
                       >
                         {project.title}
                       </h3>
@@ -254,16 +274,15 @@ export const ProjectsSection: React.FC = () => {
                       {/* Description */}
                       <p
                         className="text-xs sm:text-sm md:text-[14px] font-light text-[#BDB0A4] leading-[1.85] tracking-wide mb-8 max-w-2xl"
-                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                        style={{
+                          fontFamily: "'Montserrat', sans-serif",
+                        }}
                       >
                         {project.description}
                       </p>
                     </div>
 
-                    {/* =================================================
-                        TECHNOLOGY STACK
-                    ================================================= */}
-
+                    {/* Technologies */}
                     <div className="flex flex-wrap gap-2 pt-6 border-t border-[#8C6D4F]/25">
                       {project.tech.map((technology) => (
                         <span
@@ -279,13 +298,10 @@ export const ProjectsSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* =================================================
-                      RIGHT COLUMN
-                  ================================================= */}
-
+                  {/* Right */}
                   <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6 lg:pl-6 lg:border-l lg:border-[#8C6D4F]/25">
 
-                    {/* Architecture Metrics */}
+                    {/* Metrics */}
                     <div className="space-y-3">
                       <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-[#8C6D4F] block mb-2">
                         // PROJECT METRICS
@@ -307,10 +323,7 @@ export const ProjectsSection: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* =================================================
-                        GITHUB BUTTON
-                    ================================================= */}
-
+                    {/* GitHub */}
                     <a
                       href={project.githubUrl}
                       target="_blank"
