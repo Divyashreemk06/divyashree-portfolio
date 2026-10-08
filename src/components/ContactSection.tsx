@@ -1,13 +1,28 @@
-// src/components/ContactSection.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export const ContactSection: React.FC = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const subject = encodeURIComponent(
+      `Portfolio Contact from ${formData.name}`
+    );
+
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+
+    window.location.href = `mailto:divyashreemk7106@gmail.com?subject=${subject}&body=${body}`;
+
     setSent(true);
   };
 
@@ -17,14 +32,15 @@ export const ContactSection: React.FC = () => {
       className="relative w-full bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black pt-16 pb-16 px-6 sm:px-12 lg:px-20 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        
+
         {/* Split Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Column (5 Cols) */}
+
+          {/* LEFT COLUMN */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              {/* Eyebrow Header */}
+
+              {/* Eyebrow */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -38,10 +54,11 @@ export const ContactSection: React.FC = () => {
                 >
                   05 / CONTACT
                 </span>
+
                 <div className="w-16 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
               </motion.div>
 
-              {/* Headline */}
+              {/* Heading */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -54,10 +71,11 @@ export const ContactSection: React.FC = () => {
                   style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                 >
                   <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-                    INITIALIZE
+                    LET'S
                   </span>
+
                   <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]">
-                    TRANSMISSION.
+                    CONNECT.
                   </span>
                 </h2>
               </motion.div>
@@ -66,12 +84,49 @@ export const ContactSection: React.FC = () => {
                 className="text-xs sm:text-[13px] font-light text-[#A8988B] leading-relaxed max-w-md"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                Have an ambitious system to architect, an engineering opportunity, or a collaborative inquiry? Send a direct dispatch below.
+                Have a project, internship opportunity, collaboration idea,
+                or simply want to talk about AI and technology? Send me a
+                message and let's build something meaningful.
               </p>
+
+              {/* Direct Contact */}
+              <div className="mt-10 space-y-4">
+
+                <a
+                  href="mailto:divyashreemk7106@gmail.com"
+                  className="block text-xs text-[#CBB59D] hover:text-[#F7E7C4] transition-colors"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  divyashreemk7106@gmail.com
+                </a>
+
+                <div className="flex gap-6 pt-2">
+
+                  <a
+                    href="https://github.com/Divyashreemk06"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] tracking-[0.2em] uppercase text-[#8C6D4F] hover:text-[#D4AF37] transition-colors"
+                  >
+                    GitHub ↗
+                  </a>
+
+                  <a
+                    href="https://www.linkedin.com/in/divyashree-m-kanumappa-4ab373395"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] tracking-[0.2em] uppercase text-[#8C6D4F] hover:text-[#D4AF37] transition-colors"
+                  >
+                    LinkedIn ↗
+                  </a>
+
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Right Column: Monolith Terminal Form (7 Cols) */}
+          {/* RIGHT COLUMN */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -79,40 +134,64 @@ export const ContactSection: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-7 relative w-full rounded-sm border border-[#8C6D4F]/40 bg-[#0A0806] p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden"
           >
-            {/* Top Gold Horizon Edge */}
+
+            {/* Gold Horizon */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/70 to-transparent" />
-            
-            {/* Precision Corner Crosshairs */}
+
+            {/* Corner Crosshairs */}
             <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/60" />
             <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]/60" />
             <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]/60" />
             <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]/60" />
 
             {sent ? (
+
+              /* SUCCESS STATE */
               <div className="py-16 text-center space-y-4">
+
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm">
                   ✓
                 </div>
-                <h3 className="text-3xl text-white font-normal uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                  PACKET DELIVERED
+
+                <h3
+                  className="text-3xl text-white font-normal uppercase"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                >
+                  MESSAGE READY
                 </h3>
-                <p className="text-xs text-[#A8988B] font-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                  Transmission registered successfully.
+
+                <p
+                  className="text-xs text-[#A8988B] font-light"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Your email client should now open with the message prepared.
                 </p>
+
               </div>
+
             ) : (
+
+              /* CONTACT FORM */
               <form onSubmit={handleSubmit} className="space-y-6">
-                
+
+                {/* NAME + EMAIL */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
                   <div>
                     <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
                       // SENDER
                     </span>
+
                     <input
                       type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          name: e.target.value,
+                        })
+                      }
                       placeholder="Enter name"
                       className="w-full bg-[#120F0C] border border-[#8C6D4F]/30 focus:border-[#D4AF37] text-xs text-white placeholder-[#8C6D4F]/50 px-4 py-3 outline-none rounded-sm transition-colors"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -123,55 +202,76 @@ export const ContactSection: React.FC = () => {
                     <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
                       // CHANNEL
                     </span>
+
                     <input
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          email: e.target.value,
+                        })
+                      }
                       placeholder="Enter email"
                       className="w-full bg-[#120F0C] border border-[#8C6D4F]/30 focus:border-[#D4AF37] text-xs text-white placeholder-[#8C6D4F]/50 px-4 py-3 outline-none rounded-sm transition-colors"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     />
                   </div>
+
                 </div>
 
+                {/* MESSAGE */}
                 <div>
+
                   <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
                     // PAYLOAD
                   </span>
+
                   <textarea
                     required
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Enter transmission payload..."
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        message: e.target.value,
+                      })
+                    }
+                    placeholder="Enter your message..."
                     className="w-full bg-[#120F0C] border border-[#8C6D4F]/30 focus:border-[#D4AF37] text-xs text-white placeholder-[#8C6D4F]/50 p-4 outline-none rounded-sm transition-colors resize-none"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   />
+
                 </div>
 
+                {/* BUTTON */}
                 <button
                   type="submit"
                   className="w-full py-3.5 border border-[#8C6D4F]/50 bg-[#14100D] hover:border-[#D4AF37] hover:bg-[#1A1510] text-[#E8DFD8] hover:text-[#F7E7C4] text-xs font-medium tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  EXECUTE DISPATCH ↗
+                  SEND MESSAGE ↗
                 </button>
 
               </form>
             )}
+
           </motion.div>
 
         </div>
 
-        {/* System Footer Line */}
+        {/* FOOTER */}
         <div className="pt-16 mt-16 border-t border-[#8C6D4F]/15 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4">
+
           <span className="text-[10px] font-mono tracking-widest text-[#8C6D4F] uppercase">
-            PORTFOLIO // EDITION 2026
+            DIVYASHREE M KANUMAPPA // PORTFOLIO
           </span>
+
           <span className="text-[10px] font-mono text-[#8C6D4F]">
             © {new Date().getFullYear()} • ENGINEERED WITH PRECISION
           </span>
+
         </div>
 
       </div>

@@ -1,25 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import watermarkImg from '../assets/watermark.png';
+
+const navItems = [
+  { label: 'ABOUT', href: '#about' },
+  { label: 'PROJECTS', href: '#work' },
+  { label: 'SKILLS', href: '#skills' },
+  { label: 'EXPERIENCE', href: '#experience' },
+  { label: 'CONTACT', href: '#contact' },
+];
 
 const containerVariants: Variants = {
-  hidden: { opacity: 0 },
+  hidden: {
+    opacity: 0,
+  },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.16,
+      staggerChildren: 0.12,
       delayChildren: 0.2,
     },
   },
 };
 
 const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 18, filter: 'blur(6px)' },
+  hidden: {
+    opacity: 0,
+    y: 30,
+    filter: 'blur(8px)',
+  },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
+    transition: {
+      duration: 1,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const titleVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
     transition: {
       duration: 1.1,
       ease: [0.16, 1, 0.3, 1],
@@ -27,269 +55,269 @@ const fadeUpVariants: Variants = {
   },
 };
 
-const navItems = [
-  { name: 'ABOUT', href: '#about' },
-  { name: 'PROJECTS', href: '#work' },
-  { name: 'SKILLS', href: '#skills' },
-  { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'CONTACT', href: '#contact' },
-];
-
 export const HeroSection: React.FC = () => {
-  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
-  const [isHovered, setIsHovered] = useState(false);
+  const scrollToSection = (href: string) => {
+    let element: Element | null = document.querySelector(href);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    // Fallback specifically for Projects
+    if (!element && href === '#work') {
+      element =
+        document.getElementById('projects') ||
+        document.getElementById('work');
+    }
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black cursor-none">
-      {/* ================= 1. MINIMAL CUSTOM CURSOR ================= */}
-      {cursorPos.x >= 0 && (
-        <motion.div
-          className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#D4AF37]/40 flex items-center justify-center backdrop-blur-[1px]"
-          animate={{
-            x: cursorPos.x - (isHovered ? 24 : 5),
-            y: cursorPos.y - (isHovered ? 24 : 5),
-            width: isHovered ? 48 : 10,
-            height: isHovered ? 48 : 10,
-            backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.1)' : 'rgba(235, 215, 195, 0.95)',
-          }}
-          transition={{ type: 'spring', damping: 30, stiffness: 350, mass: 0.5 }}
-        />
-      )}
+    <section
+      id="hero"
+      className="relative min-h-screen w-screen overflow-hidden bg-black text-[#E8DFD8]"
+    >
+      {/* =========================================================
+          HERO VIDEO
+          No logo
+          No signature
+          No overlay
+      ========================================================= */}
 
-      {/* ================= 2. FIXED VIDEO LAYER ================= */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black flex items-center justify-end">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="h-screen w-auto max-w-none object-contain origin-right scale-95 md:scale-[0.98] lg:scale-100"
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover object-[65%_center] md:object-center"
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-
-        {/* Seamless Soft Left Edge Blend */}
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none" />
-
-        {/* ================= 3. ANIMATED WATERMARK EMBLEM ================= */}
-        <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-12 pointer-events-none flex items-center justify-center z-10">
-          <div className="relative flex items-center justify-center">
-            <div className="absolute w-36 h-36 bg-black/85 rounded-full blur-xl" />
-
-            <motion.div
-              animate={{
-                y: [-3, 3, -3],
-                scale: [1, 1.03, 1],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="relative flex items-center justify-center"
-            >
-              <img
-                src={watermarkImg}
-                alt="Insignia"
-                className="w-28 h-28 lg:w-32 lg:h-32 object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.25)]"
-              />
-            </motion.div>
-          </div>
-        </div>
       </div>
 
-      {/* ================= 4. CONTENT LAYER ================= */}
-      <div className="relative z-10 flex flex-col justify-between h-full w-full px-6 sm:px-12 lg:px-16 pt-6 pb-8 pointer-events-none">
-        
-        {/* Navigation Bar */}
-        <header className="relative flex items-center justify-between w-full pointer-events-auto">
-          <a
-            href="#"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="text-xs sm:text-sm font-semibold tracking-[0.35em] uppercase text-[#EAD8C7] hover:opacity-75 transition-opacity"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            LOHITHA.
-          </a>
+      {/* =========================================================
+          NAVIGATION
+      ========================================================= */}
 
-          {/* Navigation Links */}
-          <nav
-            className="hidden md:flex items-center space-x-8 lg:space-x-10 text-[11px] tracking-[0.28em] font-light uppercase text-[#C4B5A5] absolute left-1/2 -translate-x-1/2"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+      <nav className="absolute top-0 left-0 right-0 z-30 px-6 sm:px-10 lg:px-16 py-7">
+        <div className="flex items-center justify-between">
+          {/* Name */}
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            onClick={() => scrollToSection('#hero')}
+            className="text-left"
+          >
+            <span
+              className="text-[13px] sm:text-[15px] lg:text-[17px] font-medium tracking-[0.28em] text-[#E8DFD8]"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              DIVYASHREE M KANUMAPPA
+            </span>
+          </motion.button>
+
+          {/* Desktop Navigation */}
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.15,
+            }}
+            className="hidden lg:flex items-center gap-10"
           >
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                className="relative group py-1 transition-colors duration-300 hover:text-[#FFF5EB]"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D4AF37]/50 transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Right Action */}
-          <a
-            href="#contact"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="group flex items-center space-x-2 text-[11px] tracking-[0.24em] font-light uppercase py-2 px-4 border border-[#8C6D4F]/50 hover:border-[#D4AF37] text-[#EAD8C7] transition-all duration-300 backdrop-blur-sm ml-auto md:ml-0"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            <span>LET&apos;S TALK</span>
-            <span className="transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">
-              ↗
-            </span>
-          </a>
-        </header>
-
-        {/* Main Hero Row */}
-        <div className="relative flex flex-col md:flex-row items-center justify-between w-full pt-4 pb-2 my-auto">
-          
-          {/* LEFT: Balanced Headline & Actions */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-[37rem] xl:max-w-[40rem] pointer-events-auto z-20"
-          >
-            {/* Massive Condensed Headline */}
-            <motion.div variants={fadeUpVariants} className="relative mb-3.5 select-none">
-              <h1
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-[7.2rem] xl:text-[7.8rem] tracking-tight uppercase leading-[0.83]"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                {/* Line 1: I BUILD */}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
-                  I BUILD
-                </span>
-
-                {/* Line 2: DIGITAL */}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]">
-                  DIGITAL
-                </span>
-
-                {/* Line 3: EXPERIENCES */}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#DFBE8A] via-[#9B7640] to-[#342410] drop-shadow-[0_10px_30px_rgba(155,118,64,0.4)]">
-                  EXPERIENCES
-                </span>
-              </h1>
-            </motion.div>
-
-            {/* Subtitle Technologies */}
-            <motion.div variants={fadeUpVariants} className="mb-4">
-              <p
-                className="text-[10px] sm:text-[11px] md:text-xs font-normal tracking-[0.28em] uppercase text-[#C4B29E]"
+              <button
+                key={item.label}
+                onClick={() => scrollToSection(item.href)}
+                className="relative text-[11px] tracking-[0.28em] text-[#B8AAA0] hover:text-white transition-colors duration-300 group"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                FULL STACK DEVELOPER <span className="text-[#8C6D4F] mx-1">•</span> UI/UX DESIGNER <span className="text-[#8C6D4F] mx-1">•</span> DATA SCIENCE
-              </p>
-            </motion.div>
+                {item.label}
 
-            {/* 3-Line Description */}
-            <motion.div
-              variants={fadeUpVariants}
-              className="text-xs sm:text-sm md:text-[13.5px] font-light text-[#A8988B] leading-[1.8] tracking-wide max-w-lg mb-6 space-y-1"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              <p>
-                I turn bold ideas into seamless digital experiences.
-                <br />
-                Where frontend meets powerful backend, and code transforms vision into impact.
-              </p>
-            </motion.div>
-
-            {/* CTA Buttons */}
-            <motion.div
-              variants={fadeUpVariants}
-              className="flex flex-row items-center gap-4 sm:gap-6"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              {/* Explore My Work CTA */}
-              <motion.a
-                href="#work"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                whileHover={{ scale: 1.02 }}
-                className="relative inline-flex items-center space-x-3 px-6 sm:px-7 py-3.5 border border-[#8C6D4F] bg-[#120F0C]/80 hover:border-[#D4AF37] text-[#EAD8C7] hover:text-[#FFF5EB] text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_25px_rgba(212,175,55,0.18)]"
-              >
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#E8D7C5]/40 to-transparent pointer-events-none" />
-                <span>EXPLORE MY WORK</span>
-                <span className="transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">
-                  ↗
-                </span>
-              </motion.a>
-
-              {/* Download Resume Button */}
-              <motion.a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                whileHover={{ scale: 1.02 }}
-                className="relative inline-flex items-center space-x-2 px-6 sm:px-7 py-3.5 border border-[#8C6D4F]/40 hover:border-[#8C6D4F] text-[#BFA895] hover:text-[#EAD8C7] text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300"
-              >
-                <span>DOWNLOAD RESUME</span>
-                <span className="transform transition-transform duration-300 group-hover:translate-y-0.5 text-xs">
-                  ↓
-                </span>
-              </motion.a>
-            </motion.div>
+                <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#D4AF37] group-hover:w-full transition-all duration-300" />
+              </button>
+            ))}
           </motion.div>
 
-          {/* RIGHT: Floating Quote & Signature Card */}
-          <motion.div
+          {/* Let's Talk */}
+          <motion.button
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:flex flex-col items-start pointer-events-auto pr-24 xl:pr-36 mr-4 z-20 select-none"
+            transition={{
+              duration: 0.8,
+              delay: 0.2,
+            }}
+            onClick={() => scrollToSection('#contact')}
+            className="hidden sm:block border border-[#8C6D4F]/70 px-6 py-3 text-[10px] tracking-[0.25em] text-[#E8DFD8] hover:border-[#D4AF37] hover:text-white transition-all duration-300"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            {/* 1. Quote Mark */}
-            <span className="text-xl text-[#C99E5D] leading-none font-serif mb-2">
-              “
-            </span>
-
-            {/* 2. Compact Two-Line Statement */}
-            <div 
-              className="text-[9.5px] font-medium tracking-[0.24em] uppercase text-[#E0D3C5] space-y-1 mb-3"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              <p>CODE IS MY CRAFT.</p>
-              <p>IMPACT IS MY GOAL.</p>
-            </div>
-
-            {/* 3. Gold Accent Line */}
-            <div className="w-28 h-[1px] bg-gradient-to-r from-[#D4AF37] via-[#E8D7C5]/70 to-transparent shadow-[0_0_8px_rgba(212,175,55,0.4)] mb-2" />
-
-            {/* 4. Fine Monoline Calligraphy Signature */}
-            <div 
-              className="text-[2.2rem] text-[#D8AB64] font-normal leading-none -ml-0.5"
-              style={{ 
-                fontFamily: "'Herr Von Muellerhoff', 'Allura', cursive",
-                letterSpacing: '0.04em',
-              }}
-            >
-              Lohitha
-            </div>
-          </motion.div>
+            LET'S TALK ↗
+          </motion.button>
         </div>
 
-        {/* Bottom Spacer */}
-        <div className="h-2" />
+        {/* Mobile Navigation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.3,
+          }}
+          className="lg:hidden flex items-center justify-center gap-4 sm:gap-6 mt-6 overflow-x-auto"
+        >
+          {navItems.map((item) => (
+            <button
+              key={item.label}
+              onClick={() => scrollToSection(item.href)}
+              className="shrink-0 text-[8px] sm:text-[9px] tracking-[0.2em] text-[#B8AAA0] hover:text-white transition-colors"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </motion.div>
+      </nav>
+
+      {/* =========================================================
+          HERO CONTENT
+      ========================================================= */}
+
+      <div className="relative z-20 min-h-screen flex items-center px-6 sm:px-10 lg:px-16 pt-32 pb-20">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="w-full max-w-7xl mx-auto"
+        >
+          <div className="max-w-[720px]">
+            {/* Main Heading */}
+            <motion.h1
+              variants={titleVariants}
+              className="uppercase leading-[0.82] tracking-tight select-none"
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+              }}
+            >
+              <span className="block text-[5rem] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-b from-white via-[#D9D1CA] to-[#70665E]">
+                I BUILD
+              </span>
+
+              <span className="block text-[5rem] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A]">
+                INTELLIGENT
+              </span>
+
+              <span className="block text-[5rem] sm:text-[6rem] md:text-[7.5rem] lg:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A]">
+                SOLUTIONS
+              </span>
+            </motion.h1>
+
+            {/* Role */}
+            <motion.div
+              variants={fadeUpVariants}
+              className="mt-8"
+            >
+              <p
+                className="text-[10px] sm:text-[11px] md:text-[12px] tracking-[0.28em] uppercase text-[#E8DFD8]"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                AI/ML DEVELOPER
+                <span className="mx-2 text-[#D4AF37]">•</span>
+                FULL STACK DEVELOPER
+                <span className="mx-2 text-[#D4AF37]">•</span>
+                BUILDER
+              </p>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              variants={fadeUpVariants}
+              className="mt-6 max-w-[620px] text-sm sm:text-base leading-relaxed text-[#B8AAA0] font-light"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              I build intelligent applications that combine AI, machine
+              learning, and modern full-stack technologies to solve
+              real-world problems.
+            </motion.p>
+
+            {/* =====================================================
+                BUTTONS
+            ===================================================== */}
+
+            <motion.div
+              variants={fadeUpVariants}
+              className="mt-9 flex flex-col sm:flex-row gap-4"
+            >
+              {/* EXPLORE MY WORK */}
+              <button
+                type="button"
+                onClick={() => scrollToSection('#work')}
+                className="group relative border border-[#B58A4A] px-8 py-4 text-[10px] sm:text-[11px] font-medium tracking-[0.25em] text-[#E8DFD8] hover:text-white transition-all duration-300 overflow-hidden cursor-pointer"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                <span className="relative z-10">
+                  EXPLORE MY WORK ↗
+                </span>
+
+                <span className="absolute inset-0 bg-[#B58A4A]/15 scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+              </button>
+
+              {/* DOWNLOAD RESUME */}
+              <a
+                href="/resume.pdf"
+                download
+                className="group relative border border-[#6F6257] px-8 py-4 text-[10px] sm:text-[11px] font-medium tracking-[0.25em] text-[#C4B5A5] hover:text-white hover:border-[#D4AF37] transition-all duration-300 text-center overflow-hidden"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                <span className="relative z-10">
+                  DOWNLOAD RESUME ↓
+                </span>
+
+                <span className="absolute inset-0 bg-[#D4AF37]/10 scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+              </a>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
+
+      {/* =========================================================
+          SCROLL INDICATOR
+      ========================================================= */}
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 1,
+          delay: 1.5,
+        }}
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 hidden sm:flex flex-col items-center gap-3"
+      >
+        <span
+          className="text-[8px] tracking-[0.3em] text-[#8F8175]"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          SCROLL
+        </span>
+
+        <motion.div
+          animate={{
+            scaleY: [1, 1.5, 1],
+            opacity: [0.4, 1, 0.4],
+          }}
+          transition={{
+            duration: 1.8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="w-[1px] h-10 bg-[#D4AF37] origin-top"
+        />
+      </motion.div>
     </section>
   );
 };
